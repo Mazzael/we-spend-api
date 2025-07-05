@@ -3,6 +3,7 @@ import { Entity } from './base-entity'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 
 export interface UserProps {
+  coupleId?: UniqueEntityID | null
   name: string
   email: string
   password: string
@@ -11,6 +12,10 @@ export interface UserProps {
 }
 
 export class User extends Entity<UserProps> {
+  get coupleId() {
+    return this.props.coupleId
+  }
+
   get name() {
     return this.props.name
   }
@@ -37,6 +42,11 @@ export class User extends Entity<UserProps> {
 
   changePassword(newPassword: string) {
     this.props.password = newPassword
+    this.touch()
+  }
+
+  enterOnCouple(coupleId: UniqueEntityID) {
+    this.props.coupleId = coupleId
     this.touch()
   }
 
