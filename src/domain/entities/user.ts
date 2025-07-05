@@ -7,35 +7,35 @@ export interface UserProps {
   email: string
   password: string
   createdAt: Date
-  updatedAt: Date
+  updatedAt?: Date | null
 }
 
 export class User extends Entity<UserProps> {
-  get name(): string {
+  get name() {
     return this.props.name
   }
 
-  get email(): string {
+  get email() {
     return this.props.email
   }
 
-  get password(): string {
+  get password() {
     return this.props.password
   }
 
-  get createdAt(): Date {
+  get createdAt() {
     return this.props.createdAt
   }
 
-  get updatedAt(): Date {
+  get updatedAt() {
     return this.props.updatedAt
   }
 
-  private touch(): void {
+  private touch() {
     this.props.updatedAt = new Date()
   }
 
-  changePassword(newPassword: string): void {
+  changePassword(newPassword: string) {
     this.props.password = newPassword
     this.touch()
   }
