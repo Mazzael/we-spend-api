@@ -3,19 +3,20 @@ import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { CreateUserUseCase } from './create-user'
 
-describe('CreateUserUseCase (integration)', () => {
-  let usersRepository: InMemoryUsersRepository
-  let hashGenerator: FakeHasher
-  let createUserUseCase: CreateUserUseCase
+describe('Create User', () => {
+  let inMemoryUsersRepository: InMemoryUsersRepository
+  let fakeHasher: FakeHasher
+
+  let sut: CreateUserUseCase
 
   beforeEach(() => {
-    usersRepository = new InMemoryUsersRepository()
-    hashGenerator = new FakeHasher()
-    createUserUseCase = new CreateUserUseCase(usersRepository, hashGenerator)
+    inMemoryUsersRepository = new InMemoryUsersRepository()
+    fakeHasher = new FakeHasher()
+    sut = new CreateUserUseCase(inMemoryUsersRepository, fakeHasher)
   })
 
   it('should create a user successfully', async () => {
-    const result = await createUserUseCase.execute({
+    const result = await sut.execute({
       name: 'Alice',
       email: 'alice@example.com',
       password: 'password123',
@@ -26,18 +27,18 @@ describe('CreateUserUseCase (integration)', () => {
     if (result.isRight()) {
       expect(result.value.user.name).toBe('Alice')
       expect(result.value.user.password).toBe('password123-hashed')
-      expect(usersRepository.items).toHaveLength(1)
+      expect(inMemoryUsersRepository.items).toHaveLength(1)
     }
   })
 
   it('should not create a user if email is already in use', async () => {
-    await createUserUseCase.execute({
+    await sut.execute({
       name: 'Alice',
       email: 'alice@example.com',
       password: 'password123',
     })
 
-    const result = await createUserUseCase.execute({
+    const result = await sut.execute({
       name: 'Bob',
       email: 'alice@example.com',
       password: 'anotherpass',
