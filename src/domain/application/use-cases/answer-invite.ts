@@ -64,10 +64,9 @@ export class AnswerInvitationUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const coupleUserAlreadyIn = await this.couplesRepository.findByMemberId(
-      user.id.toString(),
-    )
-    if (coupleUserAlreadyIn) {
+    const isUserAlreadyAnotherCoupleMember = user.coupleId !== null
+
+    if (isUserAlreadyAnotherCoupleMember) {
       return left(new UserAlreadyInCoupleError())
     }
 
@@ -76,6 +75,10 @@ export class AnswerInvitationUseCase {
         couple.members.push(user.id)
         invitation.updateStatus('accepted')
         await this.couplesRepository.save(couple)
+
+        user.enterOnCouple(couple.id)
+        await this.usersRepository.save(user)
+
         break
       }
 

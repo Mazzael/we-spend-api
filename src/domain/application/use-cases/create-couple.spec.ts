@@ -38,6 +38,7 @@ describe('Create Couple', () => {
       expect(result.value.couple.name).toBe('Cute couple')
       expect(result.value.couple.members[0].equals(user.id)).toBe(true)
       expect(inMemoryCouplesRepository.items).toHaveLength(1)
+      expect(user.coupleId).toEqual(result.value.couple.id)
     }
   })
 

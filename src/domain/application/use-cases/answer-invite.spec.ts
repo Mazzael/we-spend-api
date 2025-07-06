@@ -10,6 +10,7 @@ import { InvitationAlreadyAnsweredError } from './errors/invitation-already-answ
 import { NotAllowedError } from './errors/not-allowed-error'
 import { UserAlreadyInCoupleError } from './errors/user-already-in-couple-error'
 import { InvalidInvitationAnswerError } from './errors/invalid-invitation-answer-error'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 describe('Answer Invitation', () => {
   let inMemoryInvitationsRepository: InMemoryInvitationsRepository
@@ -65,6 +66,10 @@ describe('Answer Invitation', () => {
       expect(result.value.couple).toBeDefined()
       expect(result.value.couple.id).toEqual(couple.id)
       expect(result.value.couple.members).toHaveLength(2)
+      expect(result.value.couple.members).toContain(inviter.id)
+      expect(result.value.couple.members).toContain(invitedUser.id)
+      expect(invitation.status).toBe('accepted')
+      expect(invitedUser.coupleId).toEqual(couple.id)
     }
   })
 
@@ -73,7 +78,9 @@ describe('Answer Invitation', () => {
 
     await inMemoryUsersRepository.create(inviter)
 
-    const invitedUser = makeUser({})
+    const invitedUser = makeUser({
+      coupleId: null,
+    })
 
     await inMemoryUsersRepository.create(invitedUser)
 
@@ -102,6 +109,9 @@ describe('Answer Invitation', () => {
     if (result.isRight()) {
       expect(result.value).toBeNull()
       expect(couple.members).toHaveLength(1)
+      expect(couple.members).toContain(inviter.id)
+      expect(invitation.status).toBe('rejected')
+      expect(invitedUser.coupleId).toBeNull()
     }
   })
 
@@ -217,7 +227,9 @@ describe('Answer Invitation', () => {
 
     await inMemoryUsersRepository.create(inviter)
 
-    const invitedUser = makeUser({})
+    const invitedUser = makeUser({
+      coupleId: new UniqueEntityID('other-couple-id'),
+    })
 
     await inMemoryUsersRepository.create(invitedUser)
 
@@ -227,9 +239,12 @@ describe('Answer Invitation', () => {
 
     await inMemoryCouplesRepository.create(couple)
 
-    const otherCouple = makeCouple({
-      members: [invitedUser.id],
-    })
+    const otherCouple = makeCouple(
+      {
+        members: [invitedUser.id],
+      },
+      new UniqueEntityID('other-couple-id'),
+    )
 
     await inMemoryCouplesRepository.create(otherCouple)
 

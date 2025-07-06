@@ -49,6 +49,9 @@ export class CreateCoupleUseCase {
 
     await this.couplesRepository.create(couple)
 
+    user.enterOnCouple(couple.id)
+    await this.usersRepository.save(user)
+
     return right({ couple })
   }
 }
