@@ -26,6 +26,7 @@ enum TransactionType {
 
 model User {
   id               String             @id @default(uuid())
+  coupleId         String?            @map("couple_id")
   name             String
   email            String             @unique
   password         String
@@ -33,6 +34,8 @@ model User {
   updatedAt        DateTime           @map("updated_at")
   Invitation       Invitation[]
   TransactionPayer TransactionPayer[]
+
+  Couple Couple? @relation(fields: [coupleId], references: [id])
 
   @@map("users")
 }
@@ -44,6 +47,7 @@ model Couple {
   updatedAt   DateTime      @map("updated_at")
   Invitation  Invitation[]
   Transaction Transaction[]
+  User        User[]
 
   @@map("couples")
 }
