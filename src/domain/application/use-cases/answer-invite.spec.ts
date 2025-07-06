@@ -170,8 +170,6 @@ describe('Answer Invitation', () => {
       status: 'accepted',
     })
 
-    console.log(invitation.status, 'status')
-
     await inMemoryInvitationsRepository.create(invitation)
 
     const result = await sut.execute({
