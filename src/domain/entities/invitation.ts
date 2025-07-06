@@ -1,3 +1,4 @@
+import { Optional } from '@/core/types/optional'
 import { Entity } from './base-entity'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 
@@ -52,13 +53,13 @@ export class Invitation extends Entity<InvitationProps> {
   }
 
   static create(
-    props: Omit<InvitationProps, 'createdAt'>,
+    props: Optional<InvitationProps, 'createdAt'>,
     id?: UniqueEntityID,
   ) {
     return new Invitation(
       {
         ...props,
-        createdAt: new Date(),
+        createdAt: props.createdAt ?? new Date(),
       },
       id,
     )
