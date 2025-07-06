@@ -12,3 +12,83 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+model User {
+  id               String             @id @default(uuid())
+  name             String
+  email            String             @unique
+  password         String
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime           @map("updated_at")
+  Invitation       Invitation[]
+  TransactionPayer TransactionPayer[]
+
+  @@map("users")
+}
+
+model Couple {
+  id          String        @id @default(uuid())
+  name        String
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @map("updated_at")
+  Invitation  Invitation[]
+  Transaction Transaction[]
+
+  @@map("couples")
+}
+
+model Invitation {
+  id            String           @id @default(uuid())
+  coupleId      String           @map("couple_id")
+  inviterUserId String           @map("inviter_user_id")
+  inviteeEmail  String           @map("invitee_email")
+  token         String           @unique
+  status        InvitationStatus @default(PENDING)
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime         @map("updated_at")
+
+  couple      Couple @relation(fields: [coupleId], references: [id])
+  inviterUser User   @relation(fields: [inviterUserId], references: [id])
+
+  @@map("invitations")
+}
+
+model Transaction {
+  id            String          @id @default(uuid())
+  description   String
+  amountInCents Int             @map("amount_in_cents")
+  type          TransactionType
+  date          DateTime
+  category      String
+  coupleId      String          @map("couple_id")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @map("updated_at")
+
+  couple Couple             @relation(fields: [coupleId], references: [id])
+  payers TransactionPayer[]
+
+  @@map("transactions")
+}
+
+model TransactionPayer {
+  id            String @id @default(uuid())
+  userId        String @map("user_id")
+  transactionId String @map("transaction_id")
+  amountInCents Int    @map("amount_in_cents")
+
+  user        User        @relation(fields: [userId], references: [id])
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+
+  @@map("transaction_payers")
+}
