@@ -52,14 +52,13 @@ export class Invitation extends Entity<InvitationProps> {
   }
 
   static create(
-    props: Omit<InvitationProps, 'createdAt' | 'status'>,
+    props: Omit<InvitationProps, 'createdAt'>,
     id?: UniqueEntityID,
   ) {
     return new Invitation(
       {
         ...props,
         createdAt: new Date(),
-        status: 'pending',
       },
       id,
     )

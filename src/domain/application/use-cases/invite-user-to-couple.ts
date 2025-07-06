@@ -67,6 +67,7 @@ export class InviteUserToCoupleUseCase {
       inviterUserId: new UniqueEntityID(inviterUserId),
       inviteeEmail: invitedUser.email,
       token,
+      status: 'pending',
     })
 
     await this.invitationsRepository.create(invitation)

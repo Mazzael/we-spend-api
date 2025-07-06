@@ -14,6 +14,18 @@ export class InMemoryCouplesRepository implements CouplesRepository {
     return couple
   }
 
+  async findByMemberId(memberId: string) {
+    const couple = this.items.find((item) =>
+      item.members.some((member) => member.toString() === memberId),
+    )
+
+    if (!couple) {
+      return null
+    }
+
+    return couple
+  }
+
   async findByName(name: string): Promise<Couple | null> {
     const couple = this.items.find((item) => item.name === name)
 
