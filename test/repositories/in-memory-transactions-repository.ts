@@ -1,5 +1,6 @@
 import { Transaction } from '@/domain/entities/transaction'
 import { TransactionsRepository } from '@/domain/application/repositories/transactions-repository'
+import { FetchTransactionFilters } from '@/domain/application/repositories/filters/fetch-transactions-filters'
 
 export class InMemoryTransactionsRepository implements TransactionsRepository {
   public items: Transaction[] = []
@@ -29,21 +30,44 @@ export class InMemoryTransactionsRepository implements TransactionsRepository {
     this.items = this.items.filter((item) => !item.id.equals(transaction.id))
   }
 
-  async findManyByCoupleId(coupleId: string): Promise<Transaction[]> {
-    return this.items.filter((item) => item.coupleId.toString() === coupleId)
-  }
-
-  async findManyByDateRange(
+  async findManyByCoupleId(
     coupleId: string,
-    startDate: Date,
-    endDate: Date,
+    {
+      category,
+      endDate,
+      limit,
+      page,
+      startDate,
+      type,
+      userId,
+    }: FetchTransactionFilters,
   ): Promise<Transaction[]> {
-    return this.items.filter(
-      (item) =>
-        item.coupleId.toString() === coupleId &&
-        item.date >= startDate &&
-        item.date <= endDate,
-    )
+    const filtered = this.items.filter((transaction) => {
+      const belongsToCouple = transaction.coupleId.toString() === coupleId
+
+      const matchesCategory = !category || transaction.category === category
+
+      const matchesType = !type || transaction.type === type
+
+      const inDateRange =
+        (!startDate || transaction.date >= startDate) &&
+        transaction.date <= endDate
+
+      const matchesUser =
+        !userId ||
+        transaction.paidBy.some((payer) => payer.userId.toString() === userId)
+
+      return (
+        belongsToCouple &&
+        matchesCategory &&
+        matchesType &&
+        inDateRange &&
+        matchesUser
+      )
+    })
+
+    const startIndex = page * limit
+    return filtered.slice(startIndex, startIndex + limit)
   }
 
   async findManyByUserId(userId: string): Promise<Transaction[]> {

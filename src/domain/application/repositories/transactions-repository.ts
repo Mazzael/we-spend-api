@@ -1,4 +1,5 @@
 import { Transaction } from '@/domain/entities/transaction'
+import { FetchTransactionFilters } from './filters/fetch-transactions-filters'
 
 export abstract class TransactionsRepository {
   abstract findById(id: string): Promise<Transaction | null>
@@ -6,12 +7,9 @@ export abstract class TransactionsRepository {
   abstract save(transaction: Transaction): Promise<void>
   abstract delete(transaction: Transaction): Promise<void>
 
-  abstract findManyByCoupleId(coupleId: string): Promise<Transaction[]>
-
-  abstract findManyByDateRange(
+  abstract findManyByCoupleId(
     coupleId: string,
-    startDate: Date,
-    endDate: Date,
+    filters: FetchTransactionFilters,
   ): Promise<Transaction[]>
 
   abstract findManyByUserId(userId: string): Promise<Transaction[]>
