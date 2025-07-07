@@ -2,7 +2,9 @@ import { CouplesRepository } from '@/domain/application/repositories/couples-rep
 import { PrismaService } from '../prisma-service'
 import { Couple } from '@/domain/entities/couple'
 import { PrismaCoupleMapper } from '../mappers/prisma-couple-mapper'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class PrismaCouplesRepository implements CouplesRepository {
   constructor(private prisma: PrismaService) {}
 

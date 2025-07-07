@@ -2,7 +2,9 @@ import { InvitationsRepository } from '@/domain/application/repositories/invitat
 import { Invitation } from '@/domain/entities/invitation'
 import { PrismaInvitationMapper } from '../mappers/prisma-invitations-mapper'
 import { PrismaService } from '../prisma-service'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class PrismaInvitationsRepository implements InvitationsRepository {
   constructor(private prisma: PrismaService) {}
 

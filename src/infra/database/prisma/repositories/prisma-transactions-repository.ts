@@ -3,7 +3,9 @@ import { PrismaService } from '../prisma-service'
 import { Transaction } from '@/domain/entities/transaction'
 import { PrismaTransactionMapper } from '../mappers/prisma-transaction-mapper'
 import { FetchTransactionFilters } from '@/domain/application/repositories/filters/fetch-transactions-filters'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class PrismaTransactionsRepository implements TransactionsRepository {
   constructor(private prisma: PrismaService) {}
 
