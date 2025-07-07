@@ -11,6 +11,4 @@ export abstract class TransactionsRepository {
     coupleId: string,
     filters: FetchTransactionFilters,
   ): Promise<Transaction[]>
-
-  abstract findManyByUserId(userId: string): Promise<Transaction[]>
 }

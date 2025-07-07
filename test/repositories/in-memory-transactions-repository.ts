@@ -69,10 +69,4 @@ export class InMemoryTransactionsRepository implements TransactionsRepository {
     const startIndex = page * limit
     return filtered.slice(startIndex, startIndex + limit)
   }
-
-  async findManyByUserId(userId: string): Promise<Transaction[]> {
-    return this.items.filter((item) =>
-      item.paidBy.some((payer) => payer.userId.toString() === userId),
-    )
-  }
 }

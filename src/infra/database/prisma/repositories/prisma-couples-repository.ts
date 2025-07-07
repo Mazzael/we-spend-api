@@ -23,7 +23,7 @@ export class PrismaCouplesRepository implements CouplesRepository {
       return null
     }
 
-    return PrismaCoupleMapper.toDomain(couple, this.prisma)
+    return await PrismaCoupleMapper.toDomain(couple, this.prisma)
   }
 
   async findByName(name: string) {
@@ -35,7 +35,7 @@ export class PrismaCouplesRepository implements CouplesRepository {
       return null
     }
 
-    return PrismaCoupleMapper.toDomain(couple, this.prisma)
+    return await PrismaCoupleMapper.toDomain(couple, this.prisma)
   }
 
   async save(couple: Couple) {
