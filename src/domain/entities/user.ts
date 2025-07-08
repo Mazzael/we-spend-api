@@ -55,6 +55,7 @@ export class User extends Entity<UserProps> {
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
+        updatedAt: props.updatedAt ?? new Date(),
       },
       id,
     )
