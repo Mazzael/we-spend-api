@@ -12,7 +12,24 @@ export class PrismaInvitationsRepository implements InvitationsRepository {
     const data = PrismaInvitationMapper.toPrisma(invitation)
 
     await this.prisma.invitation.create({
-      data,
+      data: {
+        id: data.id,
+        inviteeEmail: data.inviteeEmail,
+        token: data.token,
+        updatedAt: data.updatedAt,
+        createdAt: data.createdAt,
+        status: data.status,
+        couple: {
+          connect: {
+            id: data.coupleId.toString(),
+          },
+        },
+        inviterUser: {
+          connect: {
+            id: data.inviterUserId.toString(),
+          },
+        },
+      },
     })
   }
 

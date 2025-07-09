@@ -60,6 +60,7 @@ export class Invitation extends Entity<InvitationProps> {
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
+        updatedAt: props.updatedAt ?? new Date(),
       },
       id,
     )

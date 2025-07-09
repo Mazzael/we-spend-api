@@ -7,6 +7,8 @@ import { AuthenticateUserController } from './authenticate-user.controller'
 import { AuthenticateUserUseCase } from '@/domain/application/use-cases/authenticate-user'
 import { CreateCoupleController } from './create-couple.controller'
 import { CreateCoupleUseCase } from '@/domain/application/use-cases/create-couple'
+import { InviteUserToCoupleController } from './invite-user-to-couple.controller'
+import { InviteUserToCoupleUseCase } from '@/domain/application/use-cases/invite-user-to-couple'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -14,7 +16,13 @@ import { CreateCoupleUseCase } from '@/domain/application/use-cases/create-coupl
     CreateUserController,
     AuthenticateUserController,
     CreateCoupleController,
+    InviteUserToCoupleController,
   ],
-  providers: [CreateUserUseCase, AuthenticateUserUseCase, CreateCoupleUseCase],
+  providers: [
+    CreateUserUseCase,
+    AuthenticateUserUseCase,
+    CreateCoupleUseCase,
+    InviteUserToCoupleUseCase,
+  ],
 })
 export class HttpModule {}
