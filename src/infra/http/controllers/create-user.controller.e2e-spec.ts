@@ -35,8 +35,6 @@ describe('Create User (E2E)', () => {
       },
     })
 
-    console.log(userOnDatabase, 'user')
-
     expect(userOnDatabase).toBeTruthy()
   })
 })
