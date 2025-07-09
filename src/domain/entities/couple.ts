@@ -59,6 +59,7 @@ export class Couple extends Entity<CoupleProps> {
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
+        updatedAt: props.updatedAt ?? new Date(),
       },
       id,
     )
