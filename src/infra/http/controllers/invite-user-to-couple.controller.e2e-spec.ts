@@ -72,6 +72,5 @@ describe('Invite User To Couple (E2E)', () => {
     })
 
     expect(inviteOnDatabase).toBeTruthy()
-    console.log(inviteOnDatabase, 'invite')
   })
 })
