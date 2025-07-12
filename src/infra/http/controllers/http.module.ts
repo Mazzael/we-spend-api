@@ -9,6 +9,8 @@ import { CreateCoupleController } from './create-couple.controller'
 import { CreateCoupleUseCase } from '@/domain/application/use-cases/create-couple'
 import { InviteUserToCoupleController } from './invite-user-to-couple.controller'
 import { InviteUserToCoupleUseCase } from '@/domain/application/use-cases/invite-user-to-couple'
+import { AnswerInviteController } from './answer-invite.controller'
+import { AnswerInvitationUseCase } from '@/domain/application/use-cases/answer-invite'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -17,12 +19,14 @@ import { InviteUserToCoupleUseCase } from '@/domain/application/use-cases/invite
     AuthenticateUserController,
     CreateCoupleController,
     InviteUserToCoupleController,
+    AnswerInviteController,
   ],
   providers: [
     CreateUserUseCase,
     AuthenticateUserUseCase,
     CreateCoupleUseCase,
     InviteUserToCoupleUseCase,
+    AnswerInvitationUseCase,
   ],
 })
 export class HttpModule {}
