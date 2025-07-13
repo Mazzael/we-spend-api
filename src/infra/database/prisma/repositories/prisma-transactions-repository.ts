@@ -15,6 +15,20 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
     await this.prisma.transaction.create({
       data,
     })
+
+    const payers = transaction.paidBy
+
+    await Promise.all(
+      payers.map(async (payer) => {
+        await this.prisma.transactionPayer.create({
+          data: {
+            amountInCents: payer.amountInCents,
+            userId: payer.userId.toString(),
+            transactionId: transaction.id.toString(),
+          },
+        })
+      }),
+    )
   }
 
   async findById(id: string) {

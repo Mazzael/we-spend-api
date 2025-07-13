@@ -44,7 +44,7 @@ export class PrismaTransactionMapper {
       type: transaction.type === 'expense' ? 'EXPENSE' : 'INCOME',
       date: transaction.date,
       createdAt: transaction.createdAt,
-      updatedAt: transaction.updatedAt,
+      updatedAt: transaction.updatedAt ?? new Date(),
     }
   }
 }

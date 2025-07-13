@@ -104,6 +104,7 @@ export class Transaction extends Entity<TransactionProps> {
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
+        updatedAt: props.updatedAt ?? new Date(),
       },
       id,
     )
