@@ -19,7 +19,7 @@ const createCoupleBodySchema = z.object({
 })
 
 type CreateCoupleBodySchema = z.infer<typeof createCoupleBodySchema>
-@Controller('/couple')
+@Controller('/couples')
 export class CreateCoupleController {
   constructor(private createCoupleUseCase: CreateCoupleUseCase) {}
 

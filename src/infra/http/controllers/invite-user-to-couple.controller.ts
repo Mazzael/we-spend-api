@@ -20,7 +20,7 @@ const inviteUserToCoupleBodySchema = z.object({
 })
 
 type InviteUserToCoupleBodySchema = z.infer<typeof inviteUserToCoupleBodySchema>
-@Controller('/couple/invite/:id')
+@Controller('/couples/invites/:id')
 export class InviteUserToCoupleController {
   constructor(private inviteUserToCoupleUseCase: InviteUserToCoupleUseCase) {}
 

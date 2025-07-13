@@ -31,7 +31,7 @@ describe('Invite User To Couple (E2E)', () => {
     await app.init()
   })
 
-  test('[POST] /couple/invite/:id', async () => {
+  test('[POST] /couples/invites/:id', async () => {
     const inviter = await userFactory.makePrismaUser()
 
     await userFactory.makePrismaUser({
@@ -45,7 +45,7 @@ describe('Invite User To Couple (E2E)', () => {
     const accessToken = jwt.sign({ sub: inviter.id.toString() })
 
     const response = await request(app.getHttpServer())
-      .post(`/couple/invite/${couple.id.toString()}`)
+      .post(`/couples/invites/${couple.id.toString()}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         inviteeEmail: 'johndoe2@example.com',

@@ -28,13 +28,13 @@ describe('Create Couple (E2E)', () => {
     await app.init()
   })
 
-  test('[POST] /couple', async () => {
+  test('[POST] /couples', async () => {
     const user = await userFactory.makePrismaUser()
 
     const accessToken = jwt.sign({ sub: user.id.toString() })
 
     const response = await request(app.getHttpServer())
-      .post(`/couple`)
+      .post(`/couples`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         name: 'New Couple',

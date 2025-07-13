@@ -34,7 +34,7 @@ describe('Answer Invite (E2E)', () => {
     await app.init()
   })
 
-  test('[PATCH] /couple/invite/answer/:token', async () => {
+  test('[PATCH] /couples/invites/answers/:token', async () => {
     const inviter = await userFactory.makePrismaUser()
     const user = await userFactory.makePrismaUser()
 
@@ -51,7 +51,7 @@ describe('Answer Invite (E2E)', () => {
     const accessToken = jwt.sign({ sub: user.id.toString() })
 
     const response = await request(app.getHttpServer())
-      .patch(`/couple/invite/answer/${invite.token}`)
+      .patch(`/couples/invites/answers/${invite.token}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         answer: 'accept',

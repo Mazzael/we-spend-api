@@ -23,7 +23,7 @@ const answerInviteBodySchema = z.object({
 })
 
 type AnswerInviteBodySchema = z.infer<typeof answerInviteBodySchema>
-@Controller('/couple/invite/answer/:token')
+@Controller('/couples/invites/answers/:token')
 export class AnswerInviteController {
   constructor(private answerInviteUseCase: AnswerInvitationUseCase) {}
 
