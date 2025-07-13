@@ -25,7 +25,7 @@ export class PrismaUserMapper {
       password: user.password,
       coupleId: user.coupleId ? user.coupleId.toString() : null,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
+      updatedAt: user.updatedAt ?? new Date(),
     }
   }
 }

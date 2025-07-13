@@ -28,7 +28,7 @@ export class PrismaCoupleMapper {
       id: couple.id.toString(),
       name: couple.name,
       createdAt: couple.createdAt,
-      updatedAt: couple.updatedAt,
+      updatedAt: couple.updatedAt ?? new Date(),
     }
   }
 }

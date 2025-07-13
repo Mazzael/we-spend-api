@@ -26,7 +26,7 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   async findManyByCoupleId(coupleId: string): Promise<User[]> {
     const users = this.items.filter(
-      (item) => item.coupleId.toString() === coupleId,
+      (item) => item?.coupleId?.toString() === coupleId,
     )
     return users
   }

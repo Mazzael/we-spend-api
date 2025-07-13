@@ -30,7 +30,7 @@ export class PrismaInvitationMapper {
       token: invitation.token,
       status: passDomainStatusToPrisma(invitation.status),
       createdAt: invitation.createdAt,
-      updatedAt: invitation.updatedAt ?? null,
+      updatedAt: invitation.updatedAt ?? new Date(),
     }
   }
 }

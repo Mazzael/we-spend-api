@@ -50,7 +50,7 @@ export class FetchTransactionsUseCase {
 
     const user = await this.usersRepository.findById(userId)
 
-    if (!user || user.coupleId.toString() !== coupleId) {
+    if (!user || user?.coupleId?.toString() !== coupleId) {
       return left(new ResourceNotFoundError())
     }
 
