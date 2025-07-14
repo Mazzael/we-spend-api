@@ -43,7 +43,7 @@ describe('Fetch Transactions', () => {
       coupleId: couple.id.toString(),
       page: 0,
       limit: 3,
-      startDate: null,
+      startDate: undefined,
       endDate: new Date(),
     })
 
@@ -91,7 +91,7 @@ describe('Fetch Transactions', () => {
       page: 0,
       limit: 3,
       type: 'expense',
-      startDate: null,
+      startDate: undefined,
       endDate: new Date(),
     })
 
@@ -109,7 +109,7 @@ describe('Fetch Transactions', () => {
       page: 0,
       limit: 3,
       category: 'transport',
-      startDate: null,
+      startDate: undefined,
       endDate: new Date(),
     })
 
@@ -145,7 +145,7 @@ describe('Fetch Transactions', () => {
       page: 0,
       limit: 3,
       userId: userNotInCouple.id.toString(),
-      startDate: null,
+      startDate: undefined,
       endDate: new Date(),
     })
 

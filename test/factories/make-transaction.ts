@@ -1,6 +1,9 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { TransactionProps, Transaction } from '@/domain/entities/transaction'
+import { PrismaTransactionMapper } from '@/infra/database/prisma/mappers/prisma-transaction-mapper'
+import { PrismaService } from '@/infra/database/prisma/prisma-service'
 import { faker } from '@faker-js/faker'
+import { Injectable } from '@nestjs/common'
 
 export function makeTransaction(
   override: Partial<TransactionProps> = {},
@@ -39,4 +42,35 @@ export function makeTransaction(
   )
 
   return transaction
+}
+
+@Injectable()
+export class TransactionFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaTransaction(
+    data: Partial<TransactionProps> = {},
+  ): Promise<Transaction> {
+    const transaction = makeTransaction(data)
+
+    await this.prisma.transaction.create({
+      data: PrismaTransactionMapper.toPrisma(transaction),
+    })
+
+    const payers = transaction.paidBy
+
+    await Promise.all(
+      payers.map(async (payer) => {
+        await this.prisma.transactionPayer.create({
+          data: {
+            amountInCents: payer.amountInCents,
+            userId: payer.userId.toString(),
+            transactionId: transaction.id.toString(),
+          },
+        })
+      }),
+    )
+
+    return transaction
+  }
 }

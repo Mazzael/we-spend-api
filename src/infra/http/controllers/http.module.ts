@@ -13,6 +13,8 @@ import { AnswerInviteController } from './answer-invite.controller'
 import { AnswerInvitationUseCase } from '@/domain/application/use-cases/answer-invite'
 import { CreateTransactionController } from './create-transaction.controller'
 import { CreateTransactionUseCase } from '@/domain/application/use-cases/create-transaction'
+import { FetchTransactionsController } from './fetch-transactions.controller'
+import { FetchTransactionsUseCase } from '@/domain/application/use-cases/fetch-transactions'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -23,6 +25,7 @@ import { CreateTransactionUseCase } from '@/domain/application/use-cases/create-
     InviteUserToCoupleController,
     AnswerInviteController,
     CreateTransactionController,
+    FetchTransactionsController,
   ],
   providers: [
     CreateUserUseCase,
@@ -31,6 +34,7 @@ import { CreateTransactionUseCase } from '@/domain/application/use-cases/create-
     InviteUserToCoupleUseCase,
     AnswerInvitationUseCase,
     CreateTransactionUseCase,
+    FetchTransactionsUseCase,
   ],
 })
 export class HttpModule {}

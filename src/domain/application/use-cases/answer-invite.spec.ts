@@ -62,7 +62,7 @@ describe('Answer Invitation', () => {
 
     expect(result.isRight()).toBe(true)
 
-    if (result.isRight()) {
+    if (result.isRight() && result.value) {
       expect(result.value.couple).toBeDefined()
       expect(result.value.couple.id).toEqual(couple.id)
       expect(result.value.couple.members).toHaveLength(2)

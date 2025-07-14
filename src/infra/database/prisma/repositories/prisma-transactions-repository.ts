@@ -60,35 +60,33 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
       userId,
     }: FetchTransactionFilters,
   ) {
-    const whereClause: any = {
-      coupleId,
-      date: {
-        lte: endDate,
-      },
-    }
-
-    if (startDate) {
-      whereClause.date.gte = startDate
-    }
-
-    if (category) {
-      whereClause.category = category
-    }
-
-    if (type) {
-      whereClause.type = type
-    }
-
-    if (userId) {
-      whereClause.userId = userId
-    }
-
     const prismaTransactions = await this.prisma.transaction.findMany({
-      where: whereClause,
+      where: {
+        coupleId,
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
+        category,
+        payers: {
+          some: {
+            id: userId,
+          },
+        },
+        type:
+          type === 'expense'
+            ? 'EXPENSE'
+            : type === 'income'
+              ? 'INCOME'
+              : undefined,
+      },
       take: limit,
       skip: page * limit,
       include: {
         payers: true,
+      },
+      orderBy: {
+        date: 'desc',
       },
     })
 
