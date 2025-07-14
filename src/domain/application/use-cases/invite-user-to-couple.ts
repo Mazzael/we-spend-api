@@ -46,9 +46,7 @@ export class InviteUserToCoupleUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const isInviterOnCouple = couple.members.some(
-      (member) => member.toString() === inviterUserId,
-    )
+    const isInviterOnCouple = couple.isMember(new UniqueEntityID(inviterUserId))
 
     if (!isInviterOnCouple) {
       return left(new UserNotCoupleMemberError())

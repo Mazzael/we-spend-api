@@ -47,10 +47,8 @@ export class CreateTransactionUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const memberIds = couple.members.map((member) => member.toString())
-
     const areAllPayersValid = paidBy.every((payer) =>
-      memberIds.includes(payer.userId),
+      couple.isMember(new UniqueEntityID(payer.userId)),
     )
 
     if (!areAllPayersValid) {

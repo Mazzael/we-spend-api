@@ -72,7 +72,7 @@ export class AnswerInvitationUseCase {
 
     switch (answer) {
       case 'accept': {
-        couple.members.push(user.id)
+        couple.addMember(user.id)
         invitation.updateStatus('accepted')
         await this.couplesRepository.save(couple)
 
